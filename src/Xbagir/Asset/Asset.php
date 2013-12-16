@@ -75,20 +75,20 @@ class Asset
 
             if ( ! empty($package['scripts']))
             {
-                foreach ($package['scripts'] as $script)
+                foreach ($package['scripts'] as $key => $value)
                 {
-                    $scripts .= $this->linkScript($script);
+                    $scripts .= is_numeric($key) ? $this->linkScript($value) : $this->linkScript($key, $value);  
                 }
             }
         }
-
+        
         return $styles.$scripts;
     }
 
-    protected function linkStyle($url, array $options = array())
-    {
-        $style =  $this->html->style($url, array_get($options, 'attributes', array()));
-    
+    protected function linkStyle($style, array $options = array())
+    {       
+        $style = $this->html->style($style, array_get($options, 'attributes', array()));
+               
         if ( ! empty($options['condition']) )
         {
             $style = "<!--[if {$options['condition']}]>".PHP_EOL.$style.'<![endif]-->'.PHP_EOL;
@@ -97,9 +97,9 @@ class Asset
         return $style;
     }
 
-    protected function linkScript($script)
+    protected function linkScript($script, array $options = array())
     {
-        return $this->html->script($script);
+        return $this->html->script($script, array_get($options, 'attributes', array()));
     }
 
 }
