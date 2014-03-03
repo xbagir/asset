@@ -62,7 +62,7 @@ class Asset
     {
         $styles  = '';
         $scripts = '';
-
+        
         foreach ($this->usedPackages as $package)
         {            
             if ( ! empty($package['styles']))
@@ -74,7 +74,7 @@ class Asset
             }
 
             if ( ! empty($package['scripts']))
-            {
+            {                
                 foreach ($package['scripts'] as $key => $value)
                 {
                     $scripts .= is_numeric($key) ? $this->linkScript($value) : $this->linkScript($key, $value);  
